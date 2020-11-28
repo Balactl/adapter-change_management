@@ -178,7 +178,7 @@ healthcheck(callback) {
     this.emit(status, { id: this.id });
   }
 
- /**
+  /**
    * @memberof ServiceNowAdapter
    * @method getRecord
    * @summary Get ServiceNow Record
@@ -194,28 +194,7 @@ healthcheck(callback) {
      * Note how the object was instantiated in the constructor().
      * get() takes a callback function.
      */
-     let genericResp = [];
-     this.connector.get((response,error)=>{
-       if(error){
-          log.error('Error occured while fetching records');
-       }else{
-          if(response.body){
-              resp = JSON.parse(response.body);
-              resp.result.forEach(element => {
-                  var ct = {};
-                  ct['change_ticket_number'] = element.number;
-                  ct['active'] = element.active;
-                  ct['priority'] = element.priority;
-                  ct['description'] = element.description;
-                  ct['work_start'] = element.work_start;
-                  ct['work_end'] = element.work_end;
-                  ct['change_ticket_key'] = element.sys_id;
-                  genericResp.push(ct);
-              });
-          }       
-       }
-       callback(genericResp,error);
-     })
+     this.connector.get(callback);
   }
 
   /**
@@ -234,25 +213,7 @@ healthcheck(callback) {
      * Note how the object was instantiated in the constructor().
      * post() takes a callback function.
      */
-     let changeTicket = {};
-     this.connector.post((response,error)=>{
-       if(error){
-          log.error('Error occured while posting records');
-       }else{
-          if(response.body){
-              resp = JSON.parse(response.body);
-              element = resp.result;
-              changeTicket['change_ticket_number'] = element.number;
-              changeTicket['active'] = element.active;
-              changeTicket['priority'] = element.priority;
-              changeTicket['description'] = element.description;
-              changeTicket['work_start'] = element.work_start;
-              changeTicket['work_end'] = element.work_end;
-              changeTicket['change_ticket_key'] = element.sys_id;
-          }       
-       }
-       callback(changeTicket,error);
-     })     
+     this.connector.post(callback);
   }
 }
 
