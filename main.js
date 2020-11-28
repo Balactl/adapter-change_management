@@ -95,6 +95,7 @@ class ServiceNowAdapter extends EventEmitter {
  */
 healthcheck(callback) {
  this.getRecord((result, error) => {
+
    /**
     * For this lab, complete the if else conditional
     * statements that check if an error exists
@@ -200,7 +201,8 @@ healthcheck(callback) {
           log.error('Error occured while fetching records');
        }else{
           if(response.body){
-              resp = JSON.parse(response.body);
+       
+              var resp = JSON.parse(response.body);
               resp.result.forEach(element => {
                   var ct = {};
                   ct['change_ticket_number'] = element.number;
@@ -240,8 +242,9 @@ healthcheck(callback) {
           log.error('Error occured while posting records');
        }else{
           if(response.body){
-              resp = JSON.parse(response.body);
-              element = resp.result;
+           
+              var resp = JSON.parse(response.body);
+              var element = resp.result;
               changeTicket['change_ticket_number'] = element.number;
               changeTicket['active'] = element.active;
               changeTicket['priority'] = element.priority;
